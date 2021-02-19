@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/styles/style.css">
+    <title>Catalog</title>
+    <script src="https://kit.fontawesome.com/180471e2bb.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header class="header center">
+        <div class="header__left">
+            <a href="index.html"><img src="/assets/images/logo.svg" alt="logo"></a>
+            <a href="#search"><img src="/assets/images/search.svg" alt="search"></a>
+        </div>
+        <div class="header__right">
+            <a href="catalog.html"><img src="/assets/images/burger.svg" alt="burger"></a>
+            <div class="header__box">
+                <a href="#profile"><img src="/assets/images/profile.svg" alt="profile"></a>
+                <a href="cart.html"><img src="/assets/images/cart.svg" alt="cart"></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="content">
+        <nav class="navbar center">
+            <h3 class="navbar__page-title heading primary-color">REGISTRATION</h3>
+        </nav>
+
+        <section class="registration center">
+            <form class="registration__form">
+                <h5 class="registration__heading heading-text">
+                    Your Name
+                </h5>
+                <div class="fields-set">
+                    <input type="text" required name="first-name" class="input" placeholder="First Name">
+                    <input type="text" required name="first-name" class="input" placeholder="Last Name">
+                </div>
+                <div class="radio">
+                    <label class="radio__label">
+                        <input name="user-sex" type="radio">
+                        Male
+                    </label>
+                    <label class="radio__label">
+                        <input name="user-sex" type="radio">
+                        Female
+                    </label>
+                </div>
+
+                <h5 class="registration__heading registration__heading_mgt heading-text">
+                    Login details
+                </h5>
+                <div class="fields-set">
+                    <input type="email" required name="first-name" class="input" placeholder="Email">
+                    <input type="password" required name="first-name" class="input" placeholder="Password">
+                </div>
+                <p class="registration__alert text">
+                    Please use 8 or more characters, with at least 1 number and a mixture of uppercase and lowercase
+                    letters
+                </p>
+
+                <button class="registration__btn btn btn_primary">JOIN NOW <i
+                        class="fas fa-long-arrow-alt-right"></i></button>
+            </form>
+
+            <div class="registration__info">
+                <h4 class="heading registration__text">LOYALTY HAS ITS PERKS</h4>
+                <p class="registration__text registration__text_middle">Get in on the loyalty program where you can earn
+                    points and unlock serious perks. Starting with these as soon as you join:</p>
+                <ul class="check-list">
+                    <li class="check-list__item registration__text">
+                        <i class="fas fa-check"></i>
+                        15% off welcome offer
+                    </li>
+                    <li class="check-list__item registration__text">
+                        <i class="fas fa-check"></i>
+                        Free shipping, returns and exchanges on all orders
+                    </li>
+                    <li class="check-list__item registration__text">
+                        <i class="fas fa-check"></i>
+                        $10 off a purchase on your birthday
+                    </li>
+                    <li class="check-list__item registration__text">
+                        <i class="fas fa-check"></i>
+                        Early access to products
+                    </li>
+                    <li class="check-list__item registration__text">
+                        <i class="fas fa-check"></i>
+                        Exclusive offers & rewards
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__subscribe center">
+            <figure class="footer__quote">
+                <img class="footer__avatar" src="/assets/images/avatar.jpg" alt="avatar">
+                <blockquote class="footer__blockquote">
+                    “Vestibulum quis porttitor dui! Quisque viverra nunc mi,
+                    a pulvinar purus condimentum“
+                </blockquote>
+            </figure>
+            <form class="footer__form" action="/#subscribe">
+                <h3 class="heading">
+                    SUBSCRIBE
+                </h3>
+                <h4 class="footer__form__heading-mini heading-mini">
+                    FOR OUR NEWLETTER AND PROMOTION
+                </h4>
+                <div class="single-form">
+                    <input class="input-single" type="email" required placeholder="Enter Your Email">
+                    <button type="submit" class="btn btn_primary btn_padding_small">
+                        Subscribe
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="footer__bottom center">
+
+            <p class="footer__copyright text">&copy; 2021 Brand All Rights Reserved.</p>
+
+            <div class="footer__social">
+                <a href="#fb" class="social">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#inst" class="social">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#pt" class="social">
+                    <i class="fab fa-pinterest"></i>
+                </a>
+                <a href="#twt" class="social">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+        </div>
+
+    </footer>
+</body>
+
+</html>

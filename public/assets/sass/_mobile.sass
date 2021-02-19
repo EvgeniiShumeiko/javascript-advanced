@@ -1,0 +1,61 @@
+@include screen(mobile)
+    .center
+        padding-left: 15px
+        padding-right: 15px
+
+    .input-single
+        width: 230px
+
+    .header
+        &__box
+            display: none
+
+    .promo
+        display: flex
+        justify-content: center
+        align-items: center
+        &__left, &__background
+            display: none
+
+        &__right
+            width: 100%
+            padding-left: 0
+
+        &__heading
+            +fontParams(20px, 700, 24px)
+            &-general
+                +fontParams(38px, 900, 46px)
+
+    .catalog
+        &__top
+            flex-direction: column
+
+        &__image
+            &_big
+                display: none
+        &__big
+            background: url(/assets/images/catalog_accesories.jpg) center
+            background-size: cover
+            min-height: 111px
+
+    .products-box
+        padding-top: 64px
+
+    .product, .product__image
+        width: 100%
+
+    .future
+        margin-top: 95px
+        padding-bottom: 81px
+
+    .footer
+        &__subscribe
+            gap: 59px
+
+        &__form
+            padding-bottom: 115px
+            &__heading-mini
+                font-size: 14px
+
+        &__blockquote
+            width: 343px
