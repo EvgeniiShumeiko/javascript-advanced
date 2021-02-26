@@ -1,0 +1,290 @@
+@import variables
+@import reset
+@import mixins
+
+html,
+body
+    font-family: Lato
+    font-style: normal
+    font-weight: normal
+    font-size: 14px
+    display: flex
+    flex-direction: column
+
+a
+    color: #6F6E6E
+    transition: color .3s
+
+    &:hover
+        color: $primaryColor
+
+.center
+    padding-left: calc(50vw - 570px)
+    padding-right: calc(50vw - 570px)
+
+.text
+    +fontParams(14px, 300, 16px)
+
+.heading
+    +fontParams(24px, 700, 29px)
+    text-align: center
+    text-transform: uppercase
+    color: #222222
+
+    &-hr
+        width: 64px
+        height: 3px
+        background-color: $primaryColor
+        margin: 12px
+        border: none
+
+    &-mini
+        +fontParams(18px)
+
+    &-text
+        +fontParams(16px, 300, 16px)
+        color: $primaryColor
+        text-transform: uppercase
+
+    &-general
+        +fontParams(48px, 900, 58px)
+        color: #222222
+
+.primary-color
+    color: $primaryColor
+
+.btn
+    height: 50px
+    padding: 0 40px
+    text-align: center
+    font-size: 16px
+    border: none
+    cursor: pointer
+    display: flex
+    justify-content: space-between
+    gap: 10px
+    align-items: center
+    background: none
+    transition: background-color .4s, color .4s, box-shadow .4s
+
+    &_primary
+        background-color: $primaryColor
+        color: #fff
+
+    &_primary:hover
+        background-color: $primaryColorEffect
+
+    &_primary_outline
+        border: 1px solid $primaryColorEffect
+        color: $primaryColorEffect
+
+    &_primary_outline:hover
+        background-color: $primaryColor
+        color: #fff
+
+    &_primary_outline:hover path
+        fill: #fff
+
+    &_secondary_outline
+        border: 1px solid #A4A4A4
+        color: #4A4A4A
+
+    &_secondary_outline:hover
+        box-shadow: 0 0 5px #A4A4A4, 0 0 5px #fff
+        color: $primaryColor
+
+    &_small
+        height: 45px
+        font-size: 14px
+        padding: 13px
+
+    &_padding_small
+        padding: 0 20px
+
+.header
+    display: flex
+    height: 75px
+    background-color: #222222
+    justify-content: space-between
+    align-items: center
+
+    &__left
+        display: flex
+        align-items: flex-end
+        gap: 40px
+
+    &__right
+        display: flex
+        align-items: flex-end
+        gap: 33px
+
+    &__box
+        @extend .header__right
+
+    .content
+        flex: 1 0 auto
+
+.navbar
+    display: flex
+    justify-content: space-between
+    align-items: center
+    height: 150px
+    background-color: #f8f3f4
+
+    &__page-title
+        font-weight: 400
+
+.breadcrumb
+    list-style: none
+    display: flex
+
+    &__item
+        text-transform: uppercase
+        color: #636363
+        font-weight: 300
+        font-size: 14px
+        line-height: 17px
+
+    &__link
+        color: #636363
+
+    &__item:last-child
+        color: #F16D7F
+        font-weight: 400
+
+    &__item:not(:first-child):before
+        content: "/"
+        display: inline
+        padding: 0 5px
+        color: #636363
+
+    &__link:hover
+        color: #F16D7F
+
+.footer
+    display: flex
+    flex-shrink: 0
+    flex-direction: column
+
+    &__subscribe
+        background-image: url(../images/subscribe-cover.jpg)
+        min-height: 450px
+        background-size: cover
+        background-repeat: no-repeat
+        background-position: center bottom
+        display: flex
+        justify-content: space-between
+        flex-wrap: wrap
+
+    &__quote
+        display: flex
+        flex-direction: column
+        align-items: center
+        padding-top: 96px
+        width: 50%
+        min-width: 343px
+        flex: 1
+
+    &__avatar
+        border-radius: 50%
+
+    &__blockquote
+        text-align: center
+        margin-top: 30px
+        justify-self: center
+        width: 360px
+        font-size: 20px
+        line-height: 24px
+
+    &__form
+        min-width: 360px
+        width: 50%
+        flex: 1
+        text-align: center
+        display: flex
+        justify-content: center
+        flex-direction: column
+        align-items: center
+
+    &__form__heading-mini
+        margin-top: 12px
+
+    &__bottom
+        display: flex
+        background-color: #222224
+        height: 80px
+        justify-content: space-between
+        align-items: center
+
+    &__copyright
+        color: #fff
+        font-size: 16px
+
+    &__social
+        display: flex
+        gap: 7px
+
+.single-form
+    margin-top: 30px
+    display: flex
+    border-radius: 25px
+    overflow: hidden
+    width: fit-content
+
+.input
+    height: 44px
+    padding: 12px 17px
+    font-size: 13px
+    color: #b1b1b1
+    border: 1px solid #A4A4A4
+    font-weight: 300
+    line-height: 16px
+
+    &:focus
+        color: #222222
+
+    &-single
+        height: 50px
+        width: 250px
+        font-size: 14px
+        color: #222224
+        padding: 0 22px
+        border: none
+        background-color: #E1E1E1
+
+.fields-set
+    display: flex
+    flex-direction: column
+    gap: 21px
+    padding: 21px 0
+
+.radio
+    display: flex
+    gap: 20px
+
+    &__label
+        display: flex
+        gap: 10px
+        justify-content: flex-start
+        align-items: center
+        font-weight: 300
+        font-size: 11px
+        line-height: 13px
+        color: #000000
+
+    &__input
+
+// Стили главной страницы сайта
+@import pages/main
+
+// Стили страниц каталога и продуктов
+@import pages/products
+
+// Стили страницы регистрации
+@import pages/registration
+
+// Стили страницы корзины
+@import pages/cart
+
+@import tablet
+@import mobile
