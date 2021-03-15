@@ -1,10 +1,10 @@
 "use strict";
 
-class GoodsComponent extends Component {
-  constructor (data, cartInstance) {
+class GoodsItem extends Component {
+  constructor (data, cart) {
     super();
     this.goods = new Goods(data);
-    this.cartInstance = cartInstance
+    this.cartInstance = cart
 
     this.addToCart = this.addToCart.bind(this);
   }
@@ -21,13 +21,22 @@ class GoodsComponent extends Component {
     return title;
   }
 
+  createPrice() {
+    let price = document.createElement('p');
+    price.innerText = this.goods.price + '₽'
+
+    return price;
+  }
+
   createCardBody() {
     let cardBody = document.createElement('div');
     let title = this.createTitle();
+    let price = this.createPrice()
     let btn = new Button('Добавить в корзину', this.addToCart);
 
     cardBody.classList.add('card-body')
     cardBody.append(title)
+    cardBody.append(price)
     btn.pushComponent(cardBody)
     return cardBody;
   }

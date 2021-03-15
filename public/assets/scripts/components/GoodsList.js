@@ -12,7 +12,7 @@ class GoodsList extends Component {
 
     _fillGoodsList () {
         let goodsObj = this._fetchGoods()
-        this.goods = goodsObj.map(goods => new GoodsComponent(goods, this._getCart()));
+        this.goods = goodsObj.map(goods => new GoodsItem(goods, this._getCart()));
     }
 
     _fetchGoods () {
