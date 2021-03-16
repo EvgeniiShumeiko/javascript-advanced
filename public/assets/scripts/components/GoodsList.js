@@ -15,16 +15,6 @@ class GoodsList extends Component {
         this._scrollEventListener();
     }
 
-
-    // insertPosts() {
-    //     let fetchedGoods = this._getScrollCheck()
-    //
-    //     fetchedGoods.then((goods) => {
-    //         let scrollCheck = this._getScrollCheck();
-    //
-    //     })
-    // }
-
     _checkScroll() {
         let scrollCheck = this._getScrollCheck()
         if (scrollCheck !== null && scrollCheck.getBoundingClientRect().top <= window.innerHeight) {
@@ -78,11 +68,6 @@ class GoodsList extends Component {
         let scrollCheck = document.createElement('div');
         scrollCheck.classList.add('scrollCheck');
         return scrollCheck;
-    }
-
-    _getGoodsList() {
-        let goodsList = document.querySelector('.goodsList');
-        return goodsList || null;
     }
 
     _createGoodsList() {
