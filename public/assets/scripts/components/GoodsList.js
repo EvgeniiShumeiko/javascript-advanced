@@ -1,46 +1,106 @@
 class GoodsList extends Component {
-    cards = []
-    cart = null
+    goods = [];
+    isEndOfList = false;
+    cart = null;
+    offset = 0;
     constructor (el, cart) {
         super(el);
+        this._getCart = this._getCart.bind(this);
+        this._checkScroll = this._checkScroll.bind(this);
 
         this.cart = cart;
-        this._fillGoodsList();
+
         this.mountComponent();
-        this._getCart = this._getCart.bind(this);
+        this._checkScroll();
+        this._scrollEventListener();
     }
 
-    _fillGoodsList () {
-        let goodsObj = this._fetchGoods()
-        this.goods = goodsObj.map(goods => new GoodsItem(goods, this._getCart()));
-    }
 
-    _fetchGoods () {
-        let products = [];
-        for (let i = 0; i < 100; i++ ) {
-            let id = i+1;
-            products.push({
-                id: id,
-                name: faker.commerce.productName(),
-                image: 'https://picsum.photos/500?random='+id,
-                price: Math.floor((Math.random()*1000)/(Math.random()*10))
-            })
+    // insertPosts() {
+    //     let fetchedGoods = this._getScrollCheck()
+    //
+    //     fetchedGoods.then((goods) => {
+    //         let scrollCheck = this._getScrollCheck();
+    //
+    //     })
+    // }
+
+    _checkScroll() {
+        let scrollCheck = this._getScrollCheck()
+        if (scrollCheck !== null && scrollCheck.getBoundingClientRect().top <= window.innerHeight) {
+            this._initList();
         }
-        return products;
+    }
+
+    _scrollEventListener(){
+        document.addEventListener('scroll', this._checkScroll)
+    }
+
+    _initList () {
+        if (this.isEndOfList) {
+            return false;
+        }
+
+        let fetchPromise = this._fetchGoods(++this.offset)
+        fetchPromise
+            .then((goodsObj) => {
+                this.goods = [...this.goods, ...goodsObj.map(goods => new GoodsItem(goods, this._getCart()))];
+                this.mountComponent();
+            })
+            .catch(() => {
+                this.isEndOfList = true
+                console.warn('Something went wrong, when list tried init')
+            })
+
+        return true;
+    }
+
+    _fetchGoods (limit = 1) {
+        return fetch(`/database/data${limit}.json`)
+            .then((data) => {
+                return data.json();
+            })
+            .then((data) => {
+                return data.data;
+            })
     }
 
     _getCart() {
         return this.cart;
     }
 
+    _getScrollCheck() {
+        let scrollCheck = document.querySelector('.scrollCheck');
+        return scrollCheck || null;
+    }
+
+    _createScrollCheck() {
+        let scrollCheck = document.createElement('div');
+        scrollCheck.classList.add('scrollCheck');
+        return scrollCheck;
+    }
+
+    _getGoodsList() {
+        let goodsList = document.querySelector('.goodsList');
+        return goodsList || null;
+    }
+
+    _createGoodsList() {
+        let goodsList = document.createElement('div');
+        goodsList.classList.add('row', 'row-cols-1', 'row-cols-sm-2', 'row-cols-md-3', 'row-cols-lg-4', 'g-3', 'goodsList');
+        return goodsList;
+    }
+
     render () {
         let goods = this.goods;
+        let goodsList = this._createGoodsList();
 
-        let goodsList = document.createElement('div');
-        goodsList.classList.add('row', 'row-cols-1', 'row-cols-sm-2', 'row-cols-md-3', 'row-cols-lg-4', 'g-3');
         for (let g of goods) {
             g.pushComponent(goodsList)
         }
+
+        let scrollCheck = this._createScrollCheck();
+        goodsList.insertAdjacentElement('beforeend', scrollCheck);
 
         return goodsList;
     }

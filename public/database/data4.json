@@ -1,0 +1,64 @@
+{
+  "data": [
+    {
+      "id": 91,
+      "name": "Rustic Soft Hat",
+      "image": "https://picsum.photos/500?random=91",
+      "price": 509
+    },
+    {
+      "id": 92,
+      "name": "Tasty Soft Hat",
+      "image": "https://picsum.photos/500?random=92",
+      "price": 119
+    },
+    {
+      "id": 93,
+      "name": "Unbranded Rubber Shoes",
+      "image": "https://picsum.photos/500?random=93",
+      "price": 111
+    },
+    {
+      "id": 94,
+      "name": "Intelligent Fresh Salad",
+      "image": "https://picsum.photos/500?random=94",
+      "price": 100
+    },
+    {
+      "id": 95,
+      "name": "Handcrafted Wooden Chicken",
+      "image": "https://picsum.photos/500?random=95",
+      "price": 146
+    },
+    {
+      "id": 96,
+      "name": "Incredible Granite Sausages",
+      "image": "https://picsum.photos/500?random=96",
+      "price": 608
+    },
+    {
+      "id": 97,
+      "name": "Generic Soft Table",
+      "image": "https://picsum.photos/500?random=97",
+      "price": 57
+    },
+    {
+      "id": 98,
+      "name": "Refined Fresh Car",
+      "image": "https://picsum.photos/500?random=98",
+      "price": 25
+    },
+    {
+      "id": 99,
+      "name": "Ergonomic Cotton Pizza",
+      "image": "https://picsum.photos/500?random=99",
+      "price": 94
+    },
+    {
+      "id": 100,
+      "name": "Small Wooden Table",
+      "image": "https://picsum.photos/500?random=100",
+      "price": 101
+    }
+  ]
+}
