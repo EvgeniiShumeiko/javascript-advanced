@@ -6,6 +6,17 @@ const config = {
   publicPath: './public'
 }
 
+/**
+ * Возвращает файл по запросу (только существующий файл)
+ * @param file
+ * @param res
+ */
+let responseFileForRequest = (file, res) => {
+  let body = fs.readFileSync(file);
+  let fileExtension = getFileExtension(file);
+  let contentType = getContentTypeByExtension(fileExtension);
+  return sendResponse(res, body, 200, {"Content-Type": contentType});
+}
 
 /**
  * Возвращает разширение файла, без точки
@@ -55,10 +66,12 @@ let requestHandler = (req, res) => {
   let url = req.url === '/' ? '/index.html' : req.url;
   let file = config.publicPath + url;
   if (fs.existsSync(file)) {
-    let body = fs.readFileSync(file);
-    let fileExtension = getFileExtension(file);
-    let contentType = getContentTypeByExtension(fileExtension);
-    return sendResponse(res, body, 200, {"Content-Type": contentType});
+    return responseFileForRequest(file, res)
+  }
+
+  let htmlFile = file + ".html";
+  if (fs.existsSync(htmlFile)) {
+    return responseFileForRequest(htmlFile, res)
   }
 
   sendResponse(res, "404 Not Found", 404);
