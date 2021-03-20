@@ -3,26 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Store</title>
-    <link href="assets/styles/bootstrap.css" rel="stylesheet">
-    <link href="assets/styles/style.css" rel="stylesheet">
 </head>
 <body>
 <!-- Navbar content -->
 <nav class="navbar sticky-top navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand">Form</a>
+        <a class="navbar-brand">This is store</a>
+        <button id="modalButton" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Корзина</button>
     </div>
 </nav>
 
 <div class="container mt-5">
-    <div id="form"></div>
-
+    <div id="app"></div>
 </div>
 
+<!-- Модальное окно тоже можно было создать как компонент, но я предпочел работать так-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="cart-list">
+            </div>
+            <div id="cart-summary" class="d-flex justify-content-end p-4"></div>
+            <div class="modal-footer" id="cart-buttons">
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Я знаю, что так лучше не делать, но так как пока нет возможности импорта внутри файлов, я подключил их так -->
-<script src="assets/scripts/libraries/bootstrap.js" defer></script>
 <script src="assets/scripts/main.js"></script>
-
 </body>
 </html>

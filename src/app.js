@@ -1,5 +1,7 @@
 "use strict";
 
+import bootstrap from 'bootstrap'
+
 import Cart from "./components/Cart";
 import Form from "./components/Form";
 import GoodsList from "./components/GoodsList";
