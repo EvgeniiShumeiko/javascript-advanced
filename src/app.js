@@ -10,10 +10,6 @@ import FormField from "./components/FormField";
 import "./styles/style.sass"
 
 class App {
-  constructor () {
-    this.render();
-  }
-
   runCatalog() {
     let goodsElement = document.querySelector('#app');
     let cartElement = document.querySelector('#cart-list');
@@ -62,7 +58,7 @@ class App {
     formComponent.mountComponent(form);
   }
 
-  render() {
+  init() {
     let route = location.pathname.split('/').filter(i => i)
 
     if (route[0] && route[0] === "form") {
@@ -74,5 +70,10 @@ class App {
   }
 }
 
+// Применяем, только после инициализации стилей
+window.onload = () => {
+    let app = new App();
+    app.init();
+    document.body.classList.remove('d-none');
+}
 
-let app = new App();
