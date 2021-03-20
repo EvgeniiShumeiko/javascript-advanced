@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Store</title>
-    <link href="assets/styles/bootstrap.css" rel="stylesheet">
-    <link href="assets/styles/style.css" rel="stylesheet">
 </head>
 <body>
 <!-- Navbar content -->
 <nav class="navbar sticky-top navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand">This is store</a>
-        <button class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Корзина</button>
+        <button id="modalButton" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Корзина</button>
     </div>
 </nav>
 
@@ -38,17 +36,6 @@
 
 <!-- Я знаю, что так лучше не делать, но так как пока нет возможности импорта внутри файлов, я подключил их так -->
 <script src="assets/scripts/libraries/bootstrap.js" defer></script>
-<script src="assets/scripts/libraries/faker.js"></script>
-
-<script src="assets/scripts/entities/Goods.js"></script>
-<script src="assets/scripts/base/Component.js"></script>
-<script src="assets/scripts/base/CartList.js"></script>
-<script src="assets/scripts/components/Button.js"></script>
-<script src="assets/scripts/components/Counter.js"></script>
-<script src="assets/scripts/components/GoodsList.js"></script>
-<script src="assets/scripts/components/GoodsItem.js"></script>
-<script src="assets/scripts/components/CartItem.js"></script>
-<script src="assets/scripts/components/Cart.js"></script>
 
 <script src="assets/scripts/main.js"></script>
 </body>
