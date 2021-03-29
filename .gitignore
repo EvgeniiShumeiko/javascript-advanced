@@ -47,3 +47,5 @@ fabric.properties
 .DS_Store
 .AppleDouble
 .LSOverride
+
+node_modules
