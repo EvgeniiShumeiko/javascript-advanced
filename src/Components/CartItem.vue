@@ -3,31 +3,50 @@
     <b-card-text>
       {{ item.price }}₽
     </b-card-text>
-    <b-button variant="outline-danger" >Удалить</b-button>
+    <div class="card__actions">
+      <RangeButtons :defaultValue="count" @counterChanged="" />
+      <b-button variant="outline-danger mt-2" >Удалить</b-button>
+    </div>
   </b-card>
 </template>
 
 <script>
+import RangeButtons from "./RangeButtons";
+
 export default {
   name: "CartItem",
+  components: {
+    RangeButtons
+  },
   props: {
     item: {
       type: Object,
       default: {
+        id: 0,
         name: "",
         image: "",
         price: "",
       }
     }
   },
+
   data() {
     return {
       count: 1
+    }
+  },
+  methods: {
+    counterChanged({counter = 1}) {
+      this.count = counter;
     }
   },
 }
 </script>
 
 <style>
-
+.card__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 </style>

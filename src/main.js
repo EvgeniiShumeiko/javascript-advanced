@@ -5,6 +5,7 @@ import InfiniteLoading from "vue-infinite-loading";
 
 import './styles/style.sass';
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);

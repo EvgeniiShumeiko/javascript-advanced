@@ -13,7 +13,7 @@ import CartItem from "./CartItem";
 export default {
   name: "Cart",
   components: {
-    CartItem
+    CartItem,
   },
   data() {
     return {
@@ -33,6 +33,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>
