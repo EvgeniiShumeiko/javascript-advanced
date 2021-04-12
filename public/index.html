@@ -1,44 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Store</title>
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
-<style>
-    .d-none {
-        display: none;
-    }
-</style>
-<body class="d-none">
-<!-- Navbar content -->
-<nav class="navbar sticky-top navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand">This is store</a>
-        <button id="modalButton" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Корзина</button>
-    </div>
-</nav>
-
-<div class="container mt-5">
-    <div id="app"></div>
-</div>
-
-<!-- Модальное окно тоже можно было создать как компонент, но я предпочел работать так-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="cart-list">
-            </div>
-            <div id="cart-summary" class="d-flex justify-content-end p-4"></div>
-            <div class="modal-footer" id="cart-buttons">
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="assets/scripts/main.js"></script>
+<body>
+    <main></main>
+    <script src="assets/scripts/main.js"></script>
 </body>
 </html>
