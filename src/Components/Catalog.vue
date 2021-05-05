@@ -1,14 +1,14 @@
 <template>
   <div>
     <b-row cols-sm="2" cols-md="3" cols-lg="4" cols="1" class="g-3">
-      <b-col v-for="item in data" :key="item.id">
-        <CatalogItem :key="item.id" :image="item.image" :name="item.name" :price="item.price"/>
+      <b-col v-for="item in catalogList" :key="item">
+        <CatalogItem :id="item"/>
       </b-col>
     </b-row>
     <b-row col="12" class="m-3">
       <b-col>
-        <infinite-loading v-if="data.length" spinner="spiral"  @infinite="_infiniteScroll">
-          <div slot="no-more">Нууу, это точно Дно</div>
+        <infinite-loading v-if="catalogList.length" spinner="spiral"  @infinite="_infiniteScroll">
+          <div slot="no-more">Все товары загружены</div>
         </infinite-loading>
       </b-col>
     </b-row>
@@ -18,47 +18,41 @@
 
 <script>
 import CatalogItem from "./CatalogItem";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "Catalog",
   data() {
     return {
-      data: [],
       offset: 1
     }
   },
   components: {
     CatalogItem
   },
+  computed: {
+    ...mapGetters([
+        'catalogList',
+    ])
+  },
   methods: {
-    async _fetchData(offset = 1) {
-      return fetch(`/database/data${offset}.json`)
-          .then((data) => {
-            return data.json();
-          })
-          .then((data) => {
-            return data.data;
-          })
-    },
+    ...mapActions([
+        'loadProducts'
+    ]),
     _infiniteScroll($state) {
-      let fetchPromise = this._fetchData(++this.offset)
-      fetchPromise
-          .then((data) => {
-            this.data = [...this.data, ...data];
+      this.loadProducts(++this.offset)
+          .then(() => {
             $state.loaded()
           })
           .catch((err) => {
             console.warn('Something went wrong, when list tried init', err)
-            $state.complete()
+              $state.complete()
           })
-
       return true;
     }
   },
-  created() {
-    this._fetchData().then((data) => {
-      this.data = data
-    })
+  created () {
+    this.loadProducts();
   }
 }
 </script>

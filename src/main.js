@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue'
+
+import store from './store/index';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import InfiniteLoading from "vue-infinite-loading";
 
@@ -12,10 +14,12 @@ Vue.use(IconsPlugin);
 Vue.component("infinite-loading", InfiniteLoading);
 
 
+
 new Vue({
     el: 'main',
     template: '<App />',
     components: {
         App
-    }
+    },
+    store
 })
