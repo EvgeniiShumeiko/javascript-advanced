@@ -21,21 +21,21 @@ export default {
   },
   data() {
     return {
-      counter: 100
+      counter: 1
     }
   },
   methods: {
     increase() {
       this.counter++;
-      this.$emit('counterChanged', {counter: this.counter})
+      this.$emit('counterChanged', {counter: this.counter, type: "increase"})
     },
     decrease() {
       this.counter--;
-      this.$emit('counterChanged', {counter: this.counter})
+      this.$emit('counterChanged', {counter: this.counter, type: "decrease"})
     }
   },
   created() {
-    this.counter = this.props.defaultValue
+    this.counter = this.defaultValue
   }
 }
 </script>

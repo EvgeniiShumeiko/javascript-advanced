@@ -1,14 +1,19 @@
 <template>
   <b-modal id="cart" title="Корзина" cancel-title="Очистить корзину" @cancel="clearCart" ok-title="Оформить заказ" ok-variant="success">
     <b-row>
-      <CartItem v-for="item in data" :key="item.id" :item="item"></CartItem>
+      <CartItem v-for="item in cartList" :key="item.id" :item="item"></CartItem>
+      <p v-if="Object.keys(cartList).length === 0">
+        Корзина пуста
+      </p>
     </b-row>
+
   </b-modal>
 
 </template>
 
 <script>
 import CartItem from "./CartItem";
+import {mapGetters} from 'vuex';
 
 export default {
   name: "Cart",
@@ -23,10 +28,15 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapGetters([
+        'cartList'
+    ])
+  },
   methods: {
     clearCart(bvModalEvt) {
       bvModalEvt.preventDefault();
-      this.data = []
+      this.$store.commit('clearCart')
     }
   },
 
