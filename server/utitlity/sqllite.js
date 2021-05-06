@@ -11,7 +11,6 @@ let dataArr = queries.toString().split(");");
 db.serialize(() => {
     db.run("PRAGMA foreign_keys=OFF;");
     db.run("BEGIN TRANSACTION;");
-    console.log(dataArr[dataArr.length-1])
     dataArr.forEach(query => {
         if (query) {
             query += ");";
