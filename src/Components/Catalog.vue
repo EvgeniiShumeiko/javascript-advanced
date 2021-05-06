@@ -41,12 +41,15 @@ export default {
     ]),
     _infiniteScroll($state) {
       this.loadProducts(++this.offset)
-          .then(() => {
+          .then((data) => {
+            if (data.length === 0) {
+              return $state.complete();
+            }
             $state.loaded()
           })
           .catch((err) => {
             console.warn('Something went wrong, when list tried init', err)
-              $state.complete()
+            $state.complete()
           })
       return true;
     }

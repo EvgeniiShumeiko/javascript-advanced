@@ -13,7 +13,7 @@
 
 <script>
 import CartItem from "./CartItem";
-import {mapGetters} from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "Cart",
@@ -34,11 +34,17 @@ export default {
     ])
   },
   methods: {
+    ...mapActions([
+        'loadCart'
+    ]),
     clearCart(bvModalEvt) {
       bvModalEvt.preventDefault();
       this.$store.commit('clearCart')
     }
   },
+  created () {
+    this.loadCart();
+  }
 
 }
 </script>

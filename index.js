@@ -1,85 +1,145 @@
-const http = require('http');
-const fs = require('fs');
+const path = require('path');
 
+/**
+ * Инициализация Express и его middleware
+ */
+const express = require('express'),
+    app = express(),
+    cors = require('cors'),
+    bodyParser = require('body-parser'),
+    session = require('express-session');
+
+/**
+ * Утилита управленя базой данных
+ * @type {{}}
+ */
+const db = require('./server/utitlity/sqllite')
+
+/**
+ * Конфигурация
+ * @type {{static: string, port: (number|number)}}
+ */
 const config = {
-  port: +process.env.PORT || 3000,
-  publicPath: './public'
+    port: +process.env.PORT || 3000,
+    static: path.join(__dirname, './public')
 }
 
 /**
- * Возвращает файл по запросу (только существующий файл)
- * @param file
- * @param res
+ * Подключение глобальных Middleware
  */
-let responseFileForRequest = (file, res) => {
-  let body = fs.readFileSync(file);
-  let fileExtension = getFileExtension(file);
-  let contentType = getContentTypeByExtension(fileExtension);
-  return sendResponse(res, body, 200, {"Content-Type": contentType});
-}
+app.use(express.static(config.static));
+app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.json());
+
+app.use(cors({
+    origin: 'http://localhost:7777',
+    optionsSuccessStatus: 200
+}));
+
+app.use(session({
+    secret: 'testkey',
+    resave: false,
+    saveUninitialized: true
+}))
 
 /**
- * Возвращает разширение файла, без точки
- * можно через модуль path, path.extname(file)
- * @param file
- * @returns {string}
+ * Midleware установки корзины для сессии
  */
-let getFileExtension = (file) => {
-  let fileSeparate = file.split('.');
-  return fileSeparate.length > 0 ? fileSeparate.slice(-1) : ""
-}
+app.use(function (req, res, next) {
+    if (!req.session.cart) {
+        req.session.cart = {};
+    }
 
-/**
- * Возвращает Content-Type для конкретного разширения файла
- * @param ext
- * @returns {string}
- */
-let getContentTypeByExtension = (ext) => {
-  let extToContentType = {
-    html: "text/html",
-    svg: "image/svg+xml",
-    css: "text/css",
-    jpg: "image/jpeg",
-    jpeg: "image/jpeg",
-  };
-  return extToContentType.hasOwnProperty(ext) ? extToContentType[ext] : "text/plain";
-}
-
-/**
- * Функция-хелпер для отправки ответа от сервера
- * @param response
- * @param body
- * @param code
- * @param headers
- */
-let sendResponse = (response, body, code, headers = {}) => {
-  response.writeHead(code, headers);
-  response.end(body);
-};
-
-/**
- * Обработчик запросов к серверу
- * @param req
- * @param res
- */
-let requestHandler = (req, res) => {
-  let url = req.url === '/' ? '/index.html' : req.url;
-  let file = config.publicPath + url;
-  if (fs.existsSync(file)) {
-    return responseFileForRequest(file, res)
-  }
-
-  let htmlFile = file + ".html";
-  if (fs.existsSync(htmlFile)) {
-    return responseFileForRequest(htmlFile, res)
-  }
-
-  sendResponse(res, "404 Not Found", 404);
-}
-
-
-let server = http.createServer(requestHandler)
-
-server.listen(config.port, () => {
-  console.log(`Server started on ${config.port}`)
+    next();
 })
+
+
+/**
+ * Маршрут для получения каталога с пагинацией
+ */
+app.get('/api/v1/catalog/:page',  (req, res) => {
+    let page = req.params.page - 1;
+    if (page < 0) {
+        return res.status(400).json({success: 'bad', error:'Page is positive integer'})
+    }
+
+    let limit = 25;
+    let offset = page * limit;
+
+    let query = db.prepare('select * from products ORDER BY id DESC LIMIT ?, ?')
+    query.all([offset, limit], function (err, data) {
+        res.json({success: 'ok', data: data});
+    })
+})
+
+/**
+ * Маршрут для добавления нового эемента в каталог
+ */
+app.post('/api/v1/catalog/add', (req, res) => {
+    let {name, cost, image} = req.body
+    let insertQuery = db.prepare(`insert into products(name,image,price) values (?, ?, ?);`);
+    insertQuery.run([name, image, cost], function (err, data) {
+        res.json({success: 'ok', data: {id: this.lastID}})
+    })
+
+})
+
+/**
+ * Маршрут для отображения содержимого корзины для текущей сессии
+ */
+app.get('/api/v1/cart', (req, res) => {
+    res.json({success: 'ok', data: req.session.cart});
+});
+
+/**
+ * Маршрут добавления товара в корзину
+ */
+app.post('/api/v1/cart/add', (req, res) => {
+    let { id } = req.body;
+
+    let query = db.prepare("select id from products where id = ?");
+    query.get([id], (err, data) => {
+        if (data === undefined || err) {
+            res.status(400).json({success: 'bad', error: 'id is not found'})
+            return;
+        }
+
+        let product = req.session.cart[id];
+        let count = 1;
+        if (product) {
+            count = product.count+1;
+        }
+        req.session.cart[id] = {id: id, count: count};
+        res.json({success: 'ok'});
+    });
+
+});
+
+/**
+ * Маршрут для удаления товара из корзины
+ */
+app.post('/api/v1/cart/remove', (req, res) => {
+    let { id } = req.body;
+
+    let product = req.session.cart[id];
+    if (product === undefined) {
+        return res.status(400).json({success: 'bad', error: 'id is not found'})
+    }
+
+    let cart = req.session.cart;
+    delete cart[id];
+    req.session.cart = cart;
+
+    res.json({success: 'ok'});
+
+});
+
+const server = app.listen(config.port)
+
+
+process.on('SIGINT', () => {
+    //FIXME: разобраться как правильно закрывать соединение с базой данных
+    // db.close();
+    server.close();
+});
+

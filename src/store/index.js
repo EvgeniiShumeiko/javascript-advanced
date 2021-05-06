@@ -1,5 +1,6 @@
 import Vuex from 'vuex'
 import Vue from "vue";
+import api from "../utils/api";
 
 Vue.use(Vuex)
 
@@ -24,6 +25,8 @@ export default new Vuex.Store({
         addToCart (state, payload) {
             let item = {}
             item[payload.id] = payload
+            console.log(state.cartList)
+
             state.cartList = {...state.cartList, ...item}
         },
         incrementItemInCart(state, id) {
@@ -54,33 +57,40 @@ export default new Vuex.Store({
             }
             state.products = {...state.products, ...catalog}
             state.catalogList = Object.keys(state.products)
+        },
+        initCart (state, cartList) {
+            console.log(cartList)
+            state.cartList = cartList
         }
     },
     actions: {
-        fetchProducts ({commit}, offset = 1) {
-            return fetch(`/database/data${offset}.json`)
-                .then((data) => {
-                    return data.json();
-                })
-                .then((data) => {
-                    return data.data;
-                })
-        },
-        loadProducts ({dispatch, commit}, offset = 1) {
-            return dispatch("fetchProducts", offset)
+        loadProducts ({commit}, offset = 1) {
+            return api.fetchProducts(offset)
                 .then((data) => {
                     commit("initProducts", data)
+                    return data;
+                })
+        },
+        loadCart ({commit}) {
+            return api.fetchCart()
+                .then((data) => {
+                    console.log(data)
+                    commit("initCart", data)
+                    return data;
                 })
         },
         getProductById ({state}, id) {
             return state.products[id] || false
         },
         addToCart({state, commit}, id) {
-            if (!state.cartList.hasOwnProperty(id)) {
-                commit('addToCart',  {id: id, count: 1})
-            } else {
-                commit('incrementItemInCart', id)
-            }
+            api.addToCart(id)
+                .then((data) => {
+                    if (!state.cartList.hasOwnProperty(id)) {
+                        commit('addToCart',  {id: id, count: 1})
+                    } else {
+                        commit('incrementItemInCart', id)
+                    }
+                })
         },
         changeCounter({state, commit}, {id, type}) {
             if (type === "increase") {
@@ -90,9 +100,12 @@ export default new Vuex.Store({
             }
         },
         removeFromCart({state, commit}, id) {
-            if (state.cartList.hasOwnProperty(id)) {
-                commit('removeFromCart', id)
-            }
+            api.removeFromCart(id)
+                .then((data) => {
+                    if (state.cartList.hasOwnProperty(id)) {
+                        commit('removeFromCart', id)
+                    }
+                })
         }
     }
 })
