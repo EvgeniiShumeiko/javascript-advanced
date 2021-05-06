@@ -25,7 +25,6 @@ export default new Vuex.Store({
         addToCart (state, payload) {
             let item = {}
             item[payload.id] = payload
-            console.log(state.cartList)
 
             state.cartList = {...state.cartList, ...item}
         },
@@ -59,7 +58,6 @@ export default new Vuex.Store({
             state.catalogList = Object.keys(state.products)
         },
         initCart (state, cartList) {
-            console.log(cartList)
             state.cartList = cartList
         }
     },
@@ -74,7 +72,6 @@ export default new Vuex.Store({
         loadCart ({commit}) {
             return api.fetchCart()
                 .then((data) => {
-                    console.log(data)
                     commit("initCart", data)
                     return data;
                 })
@@ -84,7 +81,7 @@ export default new Vuex.Store({
         },
         addToCart({state, commit}, id) {
             api.addToCart(id)
-                .then((data) => {
+                .then(() => {
                     if (!state.cartList.hasOwnProperty(id)) {
                         commit('addToCart',  {id: id, count: 1})
                     } else {
@@ -101,7 +98,7 @@ export default new Vuex.Store({
         },
         removeFromCart({state, commit}, id) {
             api.removeFromCart(id)
-                .then((data) => {
+                .then(() => {
                     if (state.cartList.hasOwnProperty(id)) {
                         commit('removeFromCart', id)
                     }

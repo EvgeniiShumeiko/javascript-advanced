@@ -63,7 +63,7 @@ app.get('/api/v1/catalog/:page',  (req, res) => {
         return res.status(400).json({success: 'bad', error:'Page is positive integer'})
     }
 
-    let limit = 25;
+    let limit = 20;
     let offset = page * limit;
 
     let query = db.prepare('select * from products ORDER BY id DESC LIMIT ?, ?')
